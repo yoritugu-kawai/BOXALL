@@ -190,19 +190,13 @@ void Player::Update() {
 	}
 	// 青
 	Vector3 moveBoxBulue = {0, 0, 0};
-	Vector3 moveBoxBulue2 = {0, 0, 0};
-	if (RL==true){
-	}
+	
 	moveBoxBulue.x += boxSpeedBulue;
-	if (RL == false) {
-	}
-	moveBoxBulue2.x -= boxSpeedBulue;
+	
 	for (BoxType* box : BLUEs_) {
 		box->Update(moveBoxBulue);
 	}
-	for (BoxType* box : BLUEs_) {
-		box->Update(moveBoxBulue2);
-	}
+	
 }
 
 void Player::Draw(ViewProjection viewProjection_) {
