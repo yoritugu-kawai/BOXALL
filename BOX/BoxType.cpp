@@ -25,6 +25,8 @@ void BoxType::Update() {
 
 }
 
+
+
 void BoxType::Draw(const ViewProjection& viewProjection_) {
 
 	model_->Draw(worldTransform_, viewProjection_, Box_); 

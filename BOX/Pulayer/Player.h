@@ -26,7 +26,7 @@ private:
 	Input* input_ = nullptr;
 	//
 	BoxType* RED = nullptr;
-	std::list<BoxType*> REDs_;
+	std::list<BoxType*> REDs_[100];
 	BoxType* BLUE = nullptr;
 	std::list<BoxType*> BLUEs_;
 	//

@@ -3,8 +3,10 @@
 #include <ImGuiManager.h>
 #include <cassert>
 Player::~Player() {
-	for (BoxType* box : REDs_) {
+	for (int i = 0; i > 100; i++) {
+	for (BoxType* box : REDs_[i]) {
 		delete box;
+	}
 	}
 }
 
@@ -39,8 +41,9 @@ void Player::box() {
 						Vector3 bulletPosition = Add(worldTransform_.translation_, bulletOffset);
 
 						boxRed_->Initialize(model_, bulletPosition, redBox_);
-
-						REDs_.push_back(boxRed_);
+						for (int i = 0; i > 100; i++) {
+							REDs_[i].push_back(boxRed_);
+						}
 						bButtonReleased_ = false; // 十字キーが押されたことを記録
 						tim = 20;
 					}
@@ -59,8 +62,9 @@ void Player::box() {
 						Vector3 bulletPosition = Add(worldTransform_.translation_, bulletOffset);
 
 						boxRed_->Initialize(model_, bulletPosition, redBox_);
-
-						REDs_.push_back(boxRed_);
+						for (int i = 0; i > 100; i++) {
+							REDs_[i].push_back(boxRed_);
+						}
 						bButtonReleased_ = false; // 十字キーが押されたことを記録
 						tim = 20;
 					}
@@ -184,8 +188,10 @@ void Player::Update() {
 
 	// 赤
 	if (tim2 <= 0) {
-		for (BoxType* box : REDs_) {
-			box->Update();
+		for (int i = 0; i > 100; i++) {
+			for (BoxType* box : REDs_[i]) {
+				box->Update();
+			}
 		}
 	}
 	//// 青
@@ -205,8 +211,10 @@ void Player::Draw(ViewProjection viewProjection_) {
 	/*操作キー*/
 	input_ = Input::GetInstance();
 	/*弾*/
-	for (BoxType* box : REDs_) {
-		box->Draw(viewProjection_);
+	for (int i = 0; i > 100; i++) {
+		for (BoxType* box : REDs_[i]) {
+			box->Draw(viewProjection_);
+		}
 	}
 	for (BoxType* box : BLUEs_) {
 		box->Draw(viewProjection_);
