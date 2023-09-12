@@ -26,14 +26,18 @@ private:
 	Input* input_ = nullptr;
 	//
 	BoxType* RED = nullptr;
-	std::list<BoxType*> REDs_;
+	std::list<BoxType*> REDs_[100];
 	BoxType* BLUE = nullptr;
 	std::list<BoxType*> BLUEs_;
 	//
 	XINPUT_STATE joyState;
+	XINPUT_STATE prejoyState;
 	int32_t tim = 20;
 	Vector3 bulletOffset = {0.0f, 0.0f, 0.0f};
+	bool ButtonReleased_ = true;
+
 	bool bButtonReleased_ = true;
+
 	bool lLetGo = true;
 	bool rLetGo = true;
 
