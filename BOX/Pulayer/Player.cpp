@@ -26,7 +26,8 @@ void Player::box() {
 		if (joyState.Gamepad.wButtons & XINPUT_GAMEPAD_B) {
 			redMove = true;
 			blueMove = false;
-		
+			boxSpeedRed = 0.0f;
+			
 			// 右
 			if (rLetGo == true) {
 				if (joyState.Gamepad.wButtons & XINPUT_GAMEPAD_DPAD_RIGHT) {
@@ -76,20 +77,14 @@ void Player::box() {
 				lLetGo = true;
 				rLetGo = true;
 				bulletOffset.x = 0.0f;
-			
-				Vector3 moveBox = {0, 0, 0};
-				const float boxSpeedRed = 2.0f;
-
-				moveBox.y += boxSpeedRed;
-				for (BoxType* box : REDs_) {
-					box->Update(moveBox);
-				}
+				boxSpeedRed = 2.0f;
 			}
 		}
 		// 青
 		if (joyState.Gamepad.wButtons & XINPUT_GAMEPAD_X) {
 			blueMove = true;
 			redMove = false;
+			boxSpeedBulue = 0.0f;
 			// 右
 			if (rLetGo == true) {
 				if (joyState.Gamepad.wButtons & XINPUT_GAMEPAD_DPAD_RIGHT) {
@@ -107,7 +102,8 @@ void Player::box() {
 						tim = 20;
 					}
 				} else {
-					bButtonReleased_ = true; // 十字キーがリリースされたことを記録
+					bButtonReleased_ = true;// 十字キーがリリースされたことを記録
+					RL = true;
 				}
 			}
 			// 左
@@ -128,6 +124,7 @@ void Player::box() {
 					}
 				} else {
 					bButtonReleased_ = true; // 十字キーがリリースされたことを記録
+					RL = false;
 				}
 			}
 
@@ -139,12 +136,7 @@ void Player::box() {
 				lLetGo = true;
 				rLetGo = true;
 				bulletOffset.x = 0.0f;
-				Vector3 moveBoxBulue = {0, 0, 0};
-				const float boxSpeed = 2.0f;
-				moveBoxBulue.x += boxSpeed;
-				for (BoxType* box : BLUEs_) {
-					box->Update(moveBoxBulue);
-				}
+				boxSpeedBulue = 2.0f;
 			}
 		}
 	}
@@ -189,13 +181,27 @@ void Player::Update() {
 	box();
 	tim--;
 
+	Vector3 moveBoxRed = {0, 0, 0};
 
-	const float kRotSpeed = 0.2f;
-	if (input_->PushKey(DIK_A)) {
-		worldTransform_.rotation_.y -= kRotSpeed;
-	} else if (input_->PushKey(DIK_D)) {
-
-		worldTransform_.rotation_.y += kRotSpeed;
+	// 赤
+	moveBoxRed.y += boxSpeedRed;
+	for (BoxType* box : REDs_) {
+		box->Update(moveBoxRed);
+	}
+	// 青
+	Vector3 moveBoxBulue = {0, 0, 0};
+	Vector3 moveBoxBulue2 = {0, 0, 0};
+	if (RL==true){
+	}
+	moveBoxBulue.x += boxSpeedBulue;
+	if (RL == false) {
+	}
+	moveBoxBulue2.x -= boxSpeedBulue;
+	for (BoxType* box : BLUEs_) {
+		box->Update(moveBoxBulue);
+	}
+	for (BoxType* box : BLUEs_) {
+		box->Update(moveBoxBulue2);
 	}
 }
 
@@ -211,5 +217,4 @@ void Player::Draw(ViewProjection viewProjection_) {
 	for (BoxType* box : BLUEs_) {
 		box->Draw(viewProjection_);
 	}
-	
 }

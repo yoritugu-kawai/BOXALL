@@ -24,7 +24,7 @@ public:
 	/// <summary>
 	///
 	/// </summary>
-	
+	void Stat();
 
 private:
 	uint32_t Box_ = 0;
