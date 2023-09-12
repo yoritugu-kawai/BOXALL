@@ -25,8 +25,9 @@ private:
 	/*操作キー*/
 	Input* input_ = nullptr;
 	//
-	BoxType* RED = nullptr;
+	//BoxType* RED = nullptr;
 	std::list<BoxType*> REDs_;
+
 	BoxType* BLUE = nullptr;
 	std::list<BoxType*> BLUEs_;
 	//
