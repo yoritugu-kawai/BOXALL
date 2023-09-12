@@ -12,13 +12,15 @@ void BoxType::Initialize(Model* model, Vector3& position, uint32_t textureHandle
 }
 
 
-void BoxType::Update(Vector3 move) { 
+void BoxType::Update() { 
 	worldTransform_.UpdateMatrix();
-	if (isShot == 0) {
+	Vector3 move = {0, 0, 0};
+	float boxSpeed = 2.0f;
+	move.y += boxSpeed;
 	worldTransform_.translation_ = Add(worldTransform_.translation_, move);
 	worldTransform_.matWorld_ = MakeAffineMatrix(
 	    worldTransform_.scale_, worldTransform_.rotation_, worldTransform_.translation_);
-	}
+	
 	
 
 }

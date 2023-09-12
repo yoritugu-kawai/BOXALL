@@ -16,7 +16,7 @@ public:
 	/// 毎フレーム処理
 	/// </summary>
 
-	void Update(Vector3 move);
+	void Update();
 	/// <summary>
 	/// 画像
 	/// </summary>

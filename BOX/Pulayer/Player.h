@@ -38,8 +38,9 @@ private:
 	bool rLetGo = true;
 
 	uint32_t redBox_ = TextureManager::Load("red.png");
-	float boxSpeedRed = 0.0f;
+
 	bool redMove = true;
+	int tim2 = 180;
 
 	uint32_t blueBox_ = TextureManager::Load("blue.png");
 	 float boxSpeedBulue = 0.0f;
