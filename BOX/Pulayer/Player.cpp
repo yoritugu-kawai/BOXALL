@@ -27,7 +27,7 @@ void Player::box() {
 			redMove = true;
 			blueMove = false;
 			boxSpeedRed = 0.0f;
-			
+			cut += 1;
 			// 右
 			if (rLetGo == true) {
 				if (joyState.Gamepad.wButtons & XINPUT_GAMEPAD_DPAD_RIGHT) {
@@ -181,13 +181,15 @@ void Player::Update() {
 	box();
 	tim--;
 
+	
 	Vector3 moveBoxRed = {0, 0, 0};
-
 	// 赤
+	
 	moveBoxRed.y += boxSpeedRed;
 	for (BoxType* box : REDs_) {
 		box->Update(moveBoxRed);
 	}
+	
 	// 青
 	Vector3 moveBoxBulue = {0, 0, 0};
 	

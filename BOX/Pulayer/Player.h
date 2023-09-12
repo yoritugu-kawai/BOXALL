@@ -40,6 +40,9 @@ private:
 	uint32_t redBox_ = TextureManager::Load("red.png");
 	float boxSpeedRed = 0.0f;
 	bool redMove = true;
+	int cut = 0;
+	
+
 
 	uint32_t blueBox_ = TextureManager::Load("blue.png");
 	 float boxSpeedBulue = 0.0f;
