@@ -3,7 +3,7 @@
 #include <ImGuiManager.h>
 #include <cassert>
 Player::~Player() {
-	for (BoxType* box : boxs_) {
+	for (BoxType* box : REDs_) {
 		delete box;
 	}
 }
@@ -17,122 +17,133 @@ void Player::Initialize(Model* model, uint32_t textureHandle) {
 	worldTransform_.Initialize();
 	input_ = Input::GetInstance();
 }
-void Player::b() {
+void Player::box() {
 	if (tim <= 0) {
 		if (!Input::GetInstance()->GetJoystickState(0, joyState)) {
 			return;
 		}
+		// 赤
 		if (joyState.Gamepad.wButtons & XINPUT_GAMEPAD_B) {
-			red = true;
-			blue = false;
+			redMove = true;
+			blueMove = false;
+		
+			// 右
 			if (rLetGo == true) {
 				if (joyState.Gamepad.wButtons & XINPUT_GAMEPAD_DPAD_RIGHT) {
 					lLetGo = false;
 					if (bButtonReleased_) {
-						BoxType* box2_ = new BoxType;
+						BoxType* boxRed_ = new BoxType;
 						bulletOffset.x += 2.0f;
 						// 弾の位置を計算してオフセットを適用
 						Vector3 bulletPosition = Add(worldTransform_.translation_, bulletOffset);
 
-						box2_->Initialize(model_, bulletPosition, redBox_);
+						boxRed_->Initialize(model_, bulletPosition, redBox_);
 
-						boxs_.push_back(box2_);
-						bButtonReleased_ = false; // Bボタンが押されたことを記録
+						REDs_.push_back(boxRed_);
+						bButtonReleased_ = false; // 十字キーが押されたことを記録
 						tim = 20;
 					}
 				} else {
-					bButtonReleased_ = true; // Bボタンがリリースされたことを記録
+					bButtonReleased_ = true; // 十字キーがリリースされたことを記録
 				}
 			}
+			// 左
 			if (lLetGo == true) {
 				if (joyState.Gamepad.wButtons & XINPUT_GAMEPAD_DPAD_LEFT) {
 					rLetGo = false;
 					if (bButtonReleased_) {
-						BoxType* box2_ = new BoxType;
+						BoxType* boxRed_ = new BoxType;
 						bulletOffset.x -= 2.0f;
 						// 弾の位置を計算してオフセットを適用
 						Vector3 bulletPosition = Add(worldTransform_.translation_, bulletOffset);
 
-						box2_->Initialize(model_, bulletPosition, redBox_);
+						boxRed_->Initialize(model_, bulletPosition, redBox_);
 
-						boxs_.push_back(box2_);
-						bButtonReleased_ = false; // Bボタンが押されたことを記録
+						REDs_.push_back(boxRed_);
+						bButtonReleased_ = false; // 十字キーが押されたことを記録
 						tim = 20;
 					}
 				} else {
-					bButtonReleased_ = true; // Bボタンがリリースされたことを記録
+					bButtonReleased_ = true; // 十字キーがリリースされたことを記録
 				}
 			}
 
-		} else {
-			if (red == true) {
+		}
+		// 動き
+		else {
+			if (redMove == true) {
 
 				lLetGo = true;
 				rLetGo = true;
 				bulletOffset.x = 0.0f;
-				Vector3 move2 = {0, 0, 0};
-				const float kCharacterSpeed2 = 2.0f;
-				move2.y += kCharacterSpeed2;
+			
+				Vector3 moveBox = {0, 0, 0};
+				const float boxSpeedRed = 2.0f;
 
-				for (BoxType* box : boxs_) {
-					box->Update(move2);
+				moveBox.y += boxSpeedRed;
+				for (BoxType* box : REDs_) {
+					box->Update(moveBox);
 				}
 			}
 		}
+		// 青
 		if (joyState.Gamepad.wButtons & XINPUT_GAMEPAD_X) {
-			blue = true;
-			red = false;
+			blueMove = true;
+			redMove = false;
+			// 右
 			if (rLetGo == true) {
 				if (joyState.Gamepad.wButtons & XINPUT_GAMEPAD_DPAD_RIGHT) {
 					lLetGo = false;
 					if (bButtonReleased_) {
-						BoxType* box2_ = new BoxType;
+						BoxType* boxBlue_ = new BoxType;
 						bulletOffset.x += 2.0f;
 						// 弾の位置を計算してオフセットを適用
 						Vector3 bulletPosition = Add(worldTransform_.translation_, bulletOffset);
 
-						box2_->Initialize(model_, bulletPosition, blueBox_);
+						boxBlue_->Initialize(model_, bulletPosition, blueBox_);
 
-						boxs_.push_back(box2_);
-						bButtonReleased_ = false; // Bボタンが押されたことを記録
+						BLUEs_.push_back(boxBlue_);
+						bButtonReleased_ = false; // 十字キーが押されたことを記録
 						tim = 20;
 					}
 				} else {
-					bButtonReleased_ = true; // Bボタンがリリースされたことを記録
+					bButtonReleased_ = true; // 十字キーがリリースされたことを記録
 				}
 			}
+			// 左
 			if (lLetGo == true) {
 				if (joyState.Gamepad.wButtons & XINPUT_GAMEPAD_DPAD_LEFT) {
 					rLetGo = false;
 					if (bButtonReleased_) {
-						BoxType* box2_ = new BoxType;
+						BoxType* boxBlue_ = new BoxType;
 						bulletOffset.x -= 2.0f;
 						// 弾の位置を計算してオフセットを適用
 						Vector3 bulletPosition = Add(worldTransform_.translation_, bulletOffset);
 
-						box2_->Initialize(model_, bulletPosition, blueBox_);
+						boxBlue_->Initialize(model_, bulletPosition, blueBox_);
 
-						boxs_.push_back(box2_);
-						bButtonReleased_ = false; // Bボタンが押されたことを記録
+						BLUEs_.push_back(boxBlue_);
+						bButtonReleased_ = false; // 十字キーボタンが押されたことを記録
 						tim = 20;
 					}
 				} else {
-					bButtonReleased_ = true; // Bボタンがリリースされたことを記録
+					bButtonReleased_ = true; // 十字キーがリリースされたことを記録
 				}
 			}
 
-		} else {
-			if (blue == true) {
+		}
+		// 動き
+		else {
+			if (blueMove == true) {
 
 				lLetGo = true;
 				rLetGo = true;
 				bulletOffset.x = 0.0f;
-				Vector3 move2 = {0, 0, 0};
-				const float kCharacterSpeed2 = 2.0f;
-				move2.x += kCharacterSpeed2;
-
-				for (BoxType* box : boxs_) {
-					box->Update(move2);
+				Vector3 moveBoxBulue = {0, 0, 0};
+				const float boxSpeed = 2.0f;
+				moveBoxBulue.x += boxSpeed;
+				for (BoxType* box : BLUEs_) {
+					box->Update(moveBoxBulue);
 				}
 			}
 		}
@@ -175,10 +186,10 @@ void Player::Update() {
 	worldTransform_.translation_.y = min(worldTransform_.translation_.y, +kMoveLimitY);
 
 	/*弾*/
-	b();
+	box();
 	tim--;
 
-	// 回転
+
 	const float kRotSpeed = 0.2f;
 	if (input_->PushKey(DIK_A)) {
 		worldTransform_.rotation_.y -= kRotSpeed;
@@ -194,7 +205,11 @@ void Player::Draw(ViewProjection viewProjection_) {
 	/*操作キー*/
 	input_ = Input::GetInstance();
 	/*弾*/
-	for (BoxType* box : boxs_) {
+	for (BoxType* box : REDs_) {
 		box->Draw(viewProjection_);
 	}
+	for (BoxType* box : BLUEs_) {
+		box->Draw(viewProjection_);
+	}
+	
 }

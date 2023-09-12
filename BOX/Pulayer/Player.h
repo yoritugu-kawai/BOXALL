@@ -1,8 +1,8 @@
 #pragma once
+#include "BOX/BoxType.h"
+#include "BOX/math/math.h"
 #include "Input.h"
 #include <Model.h>
-#include "BOX/BoxType.h"
-#include"BOX/math/math.h"
 #include <WorldTransform.h>
 #include <list>
 class Player {
@@ -14,7 +14,7 @@ public:
 
 	void Draw(ViewProjection viewProjection_);
 
-	void b();
+	void box();
 
 private:
 	/*画像*/
@@ -25,8 +25,10 @@ private:
 	/*操作キー*/
 	Input* input_ = nullptr;
 	//
-	BoxType* box_ = nullptr; 
-	std::list<BoxType*> boxs_;
+	BoxType* RED = nullptr;
+	std::list<BoxType*> REDs_;
+	BoxType* BLUE = nullptr;
+	std::list<BoxType*> BLUEs_;
 	//
 	XINPUT_STATE joyState;
 	int32_t tim = 20;
@@ -34,8 +36,11 @@ private:
 	bool bButtonReleased_ = true;
 	bool lLetGo = true;
 	bool rLetGo = true;
-	bool red = true;
-	bool blue = true;
+	bool redMove = true;
+	bool blueMove = true;
 	uint32_t redBox_ = TextureManager::Load("red.png");
+	
+	
+	
 	uint32_t blueBox_ = TextureManager::Load("blue.png");
 };
